@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Áreas — SupplyMentum UNI</title>
+<meta name="description" content="Seis áreas donde puedes aportar y desarrollarte: Operaciones, Marketing, Talento, Corporativas, Proyectos y Tecnología.">
+<meta name="theme-color" content="#0A0A0B">
+<script>document.documentElement.className += ' js';</script>
+<link rel="icon" href="assets/cubo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<canvas id="net" aria-hidden="true"></canvas>
+<div class="page">
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo" aria-label="SupplyMentum UNI — inicio">
+    <img src="assets/logo.png" alt="SupplyMentum UNI · Cadena de Suministros">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="conocenos.html">Conócenos</a></li>
+    <li><a href="areas.html">Áreas</a></li>
+    <li><a href="proyectos.html">Proyectos</a></li>
+    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="convocatoria.html">Convocatoria</a></li>
+  </ul>
+  <a href="convocatoria.html" class="btn btn-primary btn-sm">Únete</a>
+</nav>
+
+<main>
+  <section class="section" style="padding-block:clamp(48px,6vw,90px)">
+    <div class="wrap areas-inner">
+
+      <div class="wheel" id="wheel" role="group" aria-label="Selector de áreas. Usa las flechas o arrastra para girar.">
+        <div class="wheel-track" aria-hidden="true"></div>
+        <div class="wheel-core" id="wheel-core" aria-hidden="true">
+          <canvas id="wheel-canvas"></canvas>
+          <img class="cube-fallback" src="assets/cubo.png" alt="">
+        </div>
+        <!-- Los nodos se inyectan por JS -->
+      </div>
+
+      <div class="area-panel">
+        <p class="eyebrow">Nuestras áreas</p>
+        <div class="area-fade" id="area-content">
+          <h2 class="display" id="area-name"></h2>
+          <p class="lede" id="area-desc"></p>
+          <div class="area-lists">
+            <div class="area-list">
+              <h4>Qué realizamos</h4>
+              <ul id="area-do"></ul>
+            </div>
+            <div class="area-list is-seek">
+              <h4>Qué buscamos</h4>
+              <ul id="area-seek"></ul>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="btn btn-primary" id="area-link">Descubre más →</a>
+        <p class="wheel-hint">
+          <span aria-hidden="true">↔</span> Arrastra, usa las flechas o haz clic en un área
+        </p>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="SupplyMentum UNI">
+        <p class="body-sm" style="max-width:34ch">
+          Comunidad universitaria que impulsa el desarrollo académico y profesional
+          en gestión de la cadena de suministro.
+        </p>
+      </div>
+      <div>
+        <h4>Página</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="conocenos.html">Conócenos</a></li>
+          <li><a href="areas.html">Áreas</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Comunidad</h4>
+        <ul>
+          <li><a href="eventos.html">Eventos</a></li>
+          <li><a href="convocatoria.html">Convocatoria</a></li>
+          <li><a href="#">Alianzas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Síguenos</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SupplyMentum UNI · Cadena de Suministros</span>
+      <span>Universidad Nacional de Ingeniería</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/cube.js"></script>
+<script>
+/* ── Rueda de áreas ───────────────────────────────────────────
+   Los nodos recorren una elipse; la profundidad (el seno del
+   ángulo) controla escala, opacidad y orden de apilado, de modo
+   que la rueda se lee inclinada en 3D. El nodo del frente es el
+   activo. Se mantienen como <button> reales: siguen siendo
+   clicables y accesibles por teclado.                         */
+(() => {
+  const wheel = document.getElementById('wheel');
+  if (!wheel) return;
+
+  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const AREAS = SM.areas;
+  const N = AREAS.length;
+  const STEP = (Math.PI * 2) / N;
+  const RX = 38, RY = 25;         // radios de la elipse, en % del contenedor
+  const FRONT = Math.PI / 2;      // el frente de la rueda es abajo
+
+  const nodes = AREAS.map((a, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'node';
+    // Sólo el símbolo: el nombre del área lo dice el panel de al lado.
+    // El aria-label mantiene el nodo identificable para lectores de pantalla.
+    b.setAttribute('aria-label', a.name);
+    const paths = a.icon.split('|')
+      .map(d => `<path d="${d}" stroke-linecap="round" stroke-linejoin="round"/>`).join('');
+    b.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true">${paths}</svg>`;
+    wheel.appendChild(b);
+    return b;
+  });
+
+  let angle = 0, target = 0, current = -1;
+
+  const els = {
+    box:  document.getElementById('area-content'),
+    name: document.getElementById('area-name'),
+    desc: document.getElementById('area-desc'),
+    doL:  document.getElementById('area-do'),
+    seekL:document.getElementById('area-seek'),
+    link: document.getElementById('area-link'),
+  };
+
+  const fill = (ul, arr) => {
+    ul.innerHTML = '';
+    arr.forEach(t => { const li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+  };
+
+  const show = (i) => {
+    if (i === current) return;
+    current = i;
+    const a = AREAS[i];
+    const paint = () => {
+      els.name.textContent = a.name;
+      els.desc.textContent = a.desc;
+      fill(els.doL, a.do);
+      fill(els.seekL, a.seek);
+      els.link.href = 'area.html?a=' + a.slug;
+      els.box.classList.remove('is-out');
+    };
+    if (REDUCED) { paint(); return; }
+    els.box.classList.add('is-out');
+    setTimeout(paint, 200);
+  };
+
+  const layout = () => {
+    let front = 0, best = -Infinity;
+    nodes.forEach((el, i) => {
+      const th = angle + i * STEP;
+      const depth = (Math.sin(th) + 1) / 2;          // 0 atrás · 1 adelante
+      el.style.left = (50 + RX * Math.cos(th)) + '%';
+      el.style.top  = (50 + RY * Math.sin(th)) + '%';
+      el.style.transform = `scale(${(.62 + depth * .48).toFixed(3)})`;
+      el.style.opacity = (.4 + depth * .6).toFixed(3);
+      el.style.zIndex = Math.round(depth * 100);
+      if (depth > best) { best = depth; front = i; }
+    });
+    nodes.forEach((el, i) => {
+      const on = i === front;
+      el.classList.toggle('is-active', on);
+      el.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    show(front);
+  };
+
+  // Lleva el índice i al frente por el camino más corto
+  const goTo = (i) => {
+    const want = FRONT - i * STEP;
+    let diff = (want - target) % (Math.PI * 2);
+    if (diff >  Math.PI) diff -= Math.PI * 2;
+    if (diff < -Math.PI) diff += Math.PI * 2;
+    target += diff;
+  };
+
+  const loop = () => {
+    const d = target - angle;
+    if (Math.abs(d) > 1e-4) { angle += d * .11; layout(); }
+    requestAnimationFrame(loop);
+  };
+
+  nodes.forEach((el, i) => el.addEventListener('click', () => goTo(i)));
+
+  wheel.setAttribute('tabindex', '0');
+  wheel.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { goTo((current + 1) % N); e.preventDefault(); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { goTo((current - 1 + N) % N); e.preventDefault(); }
+  });
+
+  let dragging = false, lastX = 0, moved = 0;
+  wheel.addEventListener('pointerdown', (e) => {
+    dragging = true; lastX = e.clientX; moved = 0;
+    wheel.setPointerCapture(e.pointerId);
+  });
+  wheel.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - lastX;
+    lastX = e.clientX; moved += Math.abs(dx);
+    target += dx * .009; angle += dx * .009;
+    layout();
+  });
+  const release = () => {
+    if (!dragging) return;
+    dragging = false;
+    const raw = (FRONT - target) / STEP;
+    goTo(((Math.round(raw) % N) + N) % N);
+  };
+  wheel.addEventListener('pointerup', release);
+  wheel.addEventListener('pointercancel', release);
+  // Evita que un arrastre dispare el clic del nodo
+  wheel.addEventListener('click', (e) => {
+    if (moved > 6) { e.stopPropagation(); e.preventDefault(); }
+  }, true);
+
+  goTo(0);
+  angle = target;
+  layout();
+  if (!REDUCED) loop();
+})();
+</script>
+
+</body>
+</html>

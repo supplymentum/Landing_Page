@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proyectos — SupplyMentum UNI</title>
+<meta name="description" content="Iniciativas reales que llevan el Supply Chain de la teoría a la práctica: consultorías, tecnología, operaciones y más.">
+<meta name="theme-color" content="#0A0A0B">
+<script>document.documentElement.className += ' js';</script>
+<link rel="icon" href="assets/cubo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<canvas id="net" aria-hidden="true"></canvas>
+<div class="page">
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo" aria-label="SupplyMentum UNI — inicio">
+    <img src="assets/logo.png" alt="SupplyMentum UNI · Cadena de Suministros">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="conocenos.html">Conócenos</a></li>
+    <li><a href="areas.html">Áreas</a></li>
+    <li><a href="proyectos.html">Proyectos</a></li>
+    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="convocatoria.html">Convocatoria</a></li>
+  </ul>
+  <a href="convocatoria.html" class="btn btn-primary btn-sm">Únete</a>
+</nav>
+
+<main>
+
+  <header class="page-hero is-plain">
+    <div class="wrap">
+      <h1 class="wordmark display">PROYECTOS</h1>
+      <p class="lede">Iniciativas reales que llevan el Supply Chain de la teoría a la práctica.</p>
+    </div>
+  </header>
+
+  <!-- ══ DESTACADOS ══ -->
+  <section class="section" style="padding-block:clamp(40px,5vw,64px)">
+    <div class="wrap">
+      <p class="eyebrow">Destacados</p>
+    </div>
+    <div class="wrap">
+      <div class="rail" id="destacados" data-autoscroll tabindex="0" role="region" aria-label="Proyectos destacados — desplázate horizontalmente"></div>
+    </div>
+  </section>
+
+  <!-- ══ CATÁLOGO ══ -->
+  <section class="section">
+    <div class="wrap">
+      <h2 class="display" style="margin-bottom:40px">Catálogo de proyectos</h2>
+
+      <div class="filters">
+        <label class="visually-hidden" for="q" style="position:absolute;left:-9999px">Buscar proyecto</label>
+        <input class="search" type="search" id="q" placeholder="Buscar proyecto…" autocomplete="off">
+        <div class="chips" id="chips" role="group" aria-label="Filtrar por área"></div>
+      </div>
+
+      <div class="grid grid-3" id="lista"></div>
+      <p class="empty" id="vacio" hidden>No encontramos proyectos con ese criterio.</p>
+
+      <div class="pager" id="pager">
+        <button class="btn btn-ghost btn-sm" id="prev">← Anterior</button>
+        <span id="pageLabel"></span>
+        <button class="btn btn-ghost btn-sm" id="next">Siguiente →</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="SupplyMentum UNI">
+        <p class="body-sm" style="max-width:34ch">
+          Comunidad universitaria que impulsa el desarrollo académico y profesional
+          en gestión de la cadena de suministro.
+        </p>
+      </div>
+      <div>
+        <h4>Página</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="conocenos.html">Conócenos</a></li>
+          <li><a href="areas.html">Áreas</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Comunidad</h4>
+        <ul>
+          <li><a href="eventos.html">Eventos</a></li>
+          <li><a href="convocatoria.html">Convocatoria</a></li>
+          <li><a href="#">Alianzas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Síguenos</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SupplyMentum UNI · Cadena de Suministros</span>
+      <span>Universidad Nacional de Ingeniería</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+(() => {
+  const POR_PAGINA = 6;
+  let filtro = 'Todos', busqueda = '', pagina = 0;
+
+  const $ = id => document.getElementById(id);
+
+  const tarjeta = p => `
+    <a class="card reveal" href="proyecto.html?p=${p.slug}">
+      <div class="card-media"><img src="${p.img}" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <span class="tag">${p.area}</span>
+        <h3>${p.name}</h3>
+        <p class="body-sm">${p.desc}</p>
+        <div class="card-meta">${p.year}</div>
+      </div>
+    </a>`;
+
+  // Destacados
+  $('destacados').innerHTML = SM.proyectos.filter(p => p.destacado).map(tarjeta).join('');
+
+  // Chips de área
+  $('chips').innerHTML = SM.areasProyecto.map(a =>
+    `<button class="chip" type="button" data-area="${a}" aria-pressed="${a === 'Todos'}">${a}</button>`
+  ).join('');
+
+  const filtrados = () => SM.proyectos.filter(p => {
+    const okArea = filtro === 'Todos' || p.area === filtro;
+    const t = (p.name + ' ' + p.desc + ' ' + p.area).toLowerCase();
+    return okArea && t.includes(busqueda);
+  });
+
+  const pintar = () => {
+    const res = filtrados();
+    const total = Math.max(1, Math.ceil(res.length / POR_PAGINA));
+    pagina = Math.min(pagina, total - 1);
+
+    const trozo = res.slice(pagina * POR_PAGINA, (pagina + 1) * POR_PAGINA);
+    $('lista').innerHTML = trozo.map(tarjeta).join('');
+    $('vacio').hidden = res.length > 0;
+    $('pager').style.display = res.length > POR_PAGINA ? '' : 'none';
+    $('pageLabel').textContent = `Página ${pagina + 1} de ${total}`;
+    $('prev').disabled = pagina === 0;
+    $('next').disabled = pagina >= total - 1;
+
+    // Las tarjetas nuevas entran ya visibles: el observador ya pasó
+    $('lista').querySelectorAll('.reveal').forEach(el => el.classList.add('is-in'));
+  };
+
+  $('chips').addEventListener('click', (e) => {
+    const b = e.target.closest('.chip');
+    if (!b) return;
+    filtro = b.dataset.area;
+    pagina = 0;
+    $('chips').querySelectorAll('.chip').forEach(c =>
+      c.setAttribute('aria-pressed', c === b ? 'true' : 'false'));
+    pintar();
+  });
+
+  $('q').addEventListener('input', (e) => {
+    busqueda = e.target.value.trim().toLowerCase();
+    pagina = 0;
+    pintar();
+  });
+
+  $('prev').addEventListener('click', () => { if (pagina > 0) { pagina--; pintar(); } });
+  $('next').addEventListener('click', () => { pagina++; pintar(); });
+
+  pintar();
+})();
+</script>
+
+</body>
+</html>

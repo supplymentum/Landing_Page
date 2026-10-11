@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Convocatoria — SupplyMentum UNI</title>
+<meta name="description" content="Convocatoria 2026-II de SupplyMentum UNI. Seis áreas abiertas, sin experiencia previa. Postula antes del cierre.">
+<meta name="theme-color" content="#0A0A0B">
+<script>document.documentElement.className += ' js';</script>
+<link rel="icon" href="assets/cubo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<canvas id="net" aria-hidden="true"></canvas>
+<div class="page">
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo" aria-label="SupplyMentum UNI — inicio">
+    <img src="assets/logo.png" alt="SupplyMentum UNI · Cadena de Suministros">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="conocenos.html">Conócenos</a></li>
+    <li><a href="areas.html">Áreas</a></li>
+    <li><a href="proyectos.html">Proyectos</a></li>
+    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="convocatoria.html">Convocatoria</a></li>
+  </ul>
+  <a href="convocatoria.html" class="btn btn-primary btn-sm">Únete</a>
+</nav>
+
+<main>
+
+  <!-- ══ HERO CON CUENTA REGRESIVA ══ -->
+  <section class="cta" style="padding-block:0 clamp(64px,8vw,110px)">
+    <!-- La cinta lleva los nombres de las áreas abiertas -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track" id="ticker"></div>
+    </div>
+
+    <div class="wrap" style="margin-top:clamp(48px,6vw,80px)">
+      <p class="eyebrow is-centered is-amber" id="ciclo"></p>
+      <h2 class="display" style="font-size:clamp(34px,5vw,72px)">Únete a SupplyMentum UNI</h2>
+      <p class="lede">La convocatoria está abierta. El tiempo corre.</p>
+
+      <div class="countdown" id="countdown" role="timer" aria-label="Tiempo restante para postular">
+        <div class="count-box"><div class="count-val" data-unit="d">00</div><div class="count-unit">Días</div></div>
+        <div class="count-box"><div class="count-val" data-unit="h">00</div><div class="count-unit">Horas</div></div>
+        <div class="count-box"><div class="count-val" data-unit="m">00</div><div class="count-unit">Minutos</div></div>
+        <div class="count-box"><div class="count-val" data-unit="s">00</div><div class="count-unit">Segundos</div></div>
+      </div>
+
+      <p class="cta-note" id="cierre" style="margin-bottom:32px"></p>
+      <a href="#" class="btn btn-primary btn-lg" id="postular">Postula ahora</a>
+    </div>
+  </section>
+
+  <!-- ══ ÁREAS ABIERTAS ══ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="reveal" style="margin-bottom:48px">
+        <p class="eyebrow">Áreas abiertas</p>
+        <h2 class="display">Elige dónde quieres aportar</h2>
+        <p class="lede" style="margin-top:20px">
+          Seis áreas, un mismo requisito: compromiso y ganas de construir algo real.
+        </p>
+      </div>
+      <div class="grid grid-3" id="areas-abiertas"></div>
+    </div>
+  </section>
+
+  <!-- ══ QUÉ GANARÁS ══ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="reveal" style="margin-bottom:48px">
+        <p class="eyebrow">¿Por qué SupplyMentum?</p>
+        <h2 class="display">Esto es lo que ganarás</h2>
+      </div>
+      <div class="grid grid-3" id="beneficios"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="SupplyMentum UNI">
+        <p class="body-sm" style="max-width:34ch">
+          Comunidad universitaria que impulsa el desarrollo académico y profesional
+          en gestión de la cadena de suministro.
+        </p>
+      </div>
+      <div>
+        <h4>Página</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="conocenos.html">Conócenos</a></li>
+          <li><a href="areas.html">Áreas</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Comunidad</h4>
+        <ul>
+          <li><a href="eventos.html">Eventos</a></li>
+          <li><a href="convocatoria.html">Convocatoria</a></li>
+          <li><a href="#">Alianzas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Síguenos</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SupplyMentum UNI · Cadena de Suministros</span>
+      <span>Universidad Nacional de Ingeniería</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+(() => {
+  const c = SM.convocatoria;
+
+  document.getElementById('ciclo').textContent = c.ciclo;
+  document.getElementById('cierre').textContent = 'Cierre de postulaciones: ' + c.cierreTexto;
+
+  const btn = document.getElementById('postular');
+  btn.href = c.formulario;
+
+  // Si la convocatoria está cerrada, el botón lo dice
+  if (!c.activa || new Date(c.cierre).getTime() < Date.now()) {
+    btn.textContent = 'Convocatoria cerrada';
+    btn.classList.remove('btn-primary');
+    btn.classList.add('btn-ghost');
+    btn.setAttribute('aria-disabled', 'true');
+    btn.href = 'areas.html';
+  }
+
+  // Cinta con los nombres de las áreas, duplicada para el bucle
+  const nombres = SM.areas.map(a => a.short.toUpperCase());
+  document.getElementById('ticker').innerHTML =
+    [...nombres, ...nombres].map(n => `<span>${n} ·</span>`).join('');
+
+  // Áreas abiertas
+  document.getElementById('areas-abiertas').innerHTML = SM.areas.map(a => `
+    <a class="card reveal" href="area.html?a=${a.slug}">
+      <div class="card-body">
+        <h3>${a.name}</h3>
+        <p class="body-sm">${a.desc}</p>
+        <div class="card-meta" style="color:var(--red)">Ver el área →</div>
+      </div>
+    </a>`).join('');
+
+  // Beneficios
+  document.getElementById('beneficios').innerHTML = SM.beneficios.map(b => `
+    <div class="benefit reveal">
+      <h3>${b.title}</h3>
+      <p class="body-sm">${b.desc}</p>
+    </div>`).join('');
+})();
+</script>
+
+</body>
+</html>

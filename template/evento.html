@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evento — SupplyMentum UNI</title>
+<meta name="description" content="Ficha del evento: fecha, hora, lugar e inscripción.">
+<meta name="theme-color" content="#0A0A0B">
+<script>document.documentElement.className += ' js';</script>
+<link rel="icon" href="assets/cubo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<canvas id="net" aria-hidden="true"></canvas>
+<div class="page">
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo" aria-label="SupplyMentum UNI — inicio">
+    <img src="assets/logo.png" alt="SupplyMentum UNI · Cadena de Suministros">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="conocenos.html">Conócenos</a></li>
+    <li><a href="areas.html">Áreas</a></li>
+    <li><a href="proyectos.html">Proyectos</a></li>
+    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="convocatoria.html">Convocatoria</a></li>
+  </ul>
+  <a href="convocatoria.html" class="btn btn-primary btn-sm">Únete</a>
+</nav>
+
+<main>
+
+  <header class="page-hero">
+    <img id="e-img" src="" alt="">
+    <div class="wrap">
+      <a href="eventos.html" class="back">← Todos los eventos</a>
+      <span class="tag" id="e-status" style="margin-bottom:16px"></span>
+      <h1 class="display" id="e-title"></h1>
+      <p class="lede" id="e-desc"></p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="facts">
+        <div class="fact reveal"><div class="fact-label">Fecha</div><div class="fact-val" id="e-date"></div></div>
+        <div class="fact reveal"><div class="fact-label">Hora</div><div class="fact-val" id="e-time"></div></div>
+        <div class="fact reveal"><div class="fact-label">Lugar</div><div class="fact-val" id="e-place"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta" id="e-cta">
+    <div class="wrap">
+      <h2 class="display" id="e-cta-title">Reserva tu lugar</h2>
+      <p class="lede" id="e-cta-note">Las inscripciones son gratuitas y los cupos, limitados.</p>
+      <a href="#" class="btn btn-primary btn-lg" id="e-cta-btn">Inscribirse</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="SupplyMentum UNI">
+        <p class="body-sm" style="max-width:34ch">
+          Comunidad universitaria que impulsa el desarrollo académico y profesional
+          en gestión de la cadena de suministro.
+        </p>
+      </div>
+      <div>
+        <h4>Página</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="conocenos.html">Conócenos</a></li>
+          <li><a href="areas.html">Áreas</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Comunidad</h4>
+        <ul>
+          <li><a href="eventos.html">Eventos</a></li>
+          <li><a href="convocatoria.html">Convocatoria</a></li>
+          <li><a href="#">Alianzas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Síguenos</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SupplyMentum UNI · Cadena de Suministros</span>
+      <span>Universidad Nacional de Ingeniería</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+/* El evento se elige por la URL: evento.html?e=<slug> */
+(() => {
+  const slug = new URLSearchParams(location.search).get('e');
+  const e = SM.buscarEvento(slug);
+  const pasado = e.status === 'Pasado';
+
+  document.title = e.title + ' — SupplyMentum UNI';
+  document.querySelector('meta[name=description]').content = e.desc.slice(0, 155);
+
+  document.getElementById('e-img').src = e.img;
+  const badge = document.getElementById('e-status');
+  badge.textContent = e.status;
+  badge.classList.add(pasado ? 'is-past' : 'is-amber');
+  document.getElementById('e-title').textContent = e.title;
+  document.getElementById('e-desc').textContent = e.desc;
+  document.getElementById('e-date').textContent = e.date;
+  document.getElementById('e-time').textContent = e.time;
+  document.getElementById('e-place').textContent = e.place;
+
+  // Un evento que ya ocurrió no se puede reservar
+  if (pasado) {
+    document.getElementById('e-cta-title').textContent = 'Este evento ya ocurrió';
+    document.getElementById('e-cta-note').textContent =
+      'Revisa los próximos eventos para no perderte el siguiente.';
+    const btn = document.getElementById('e-cta-btn');
+    btn.textContent = 'Ver próximos eventos';
+    btn.href = 'eventos.html';
+  }
+})();
+</script>
+
+</body>
+</html>

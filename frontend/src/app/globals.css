@@ -1,0 +1,475 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #070709;
+    --foreground: #f4f4f5;
+    --brand-red: #ed1c24;
+    --brand-red-dark: #920207;
+    --brand-gold: #ffbd59;
+    --card-bg: #121216;
+    --card-border: #22222a;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-archivo), system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom marquee animations */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: 200%;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.animate-marquee-no-pause {
+  display: flex;
+  width: 200%;
+  animation: marquee 35s linear infinite;
+}
+
+/* Custom rail scrollbar */
+.rail-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #22222a transparent;
+}
+
+.rail-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.rail-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rail-scrollbar::-webkit-scrollbar-thumb {
+  background: #22222a;
+  border-radius: 3px;
+}
+
+.rail-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ed1c24;
+}
+
+/* Conveyor belt animations */
+@keyframes conveyor-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-conveyor {
+  display: flex;
+  width: max-content;
+  animation: conveyor-left 40s linear infinite;
+}
+
+.animate-conveyor:hover {
+  animation-play-state: paused;
+}
+
+/* Text stroke matching exact screenshot: background fill + crisp dark grey stroke */
+.text-stroke-grey {
+  -webkit-text-stroke: 1.5px #33333e;
+  color: #070709;
+  font-family: var(--font-archivo), system-ui, sans-serif;
+}
+
+.text-stroke-grey:hover {
+  -webkit-text-stroke: 1.5px rgba(237, 28, 36, 0.7);
+}
+
+/* Smooth scrolling — con el mismo guard de movimiento reducido que usa
+   site.css en el prototipo (`html{ scroll-behavior:auto }` bajo reduce). */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Cuando Lenis está activo (añade la clase `.lenis` a <html>) él conduce el
+   scroll por rAF; el `scroll-behavior: smooth` de CSS pelearía con su inercia,
+   así que se desactiva y se dejan los estilos recomendados por Lenis. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* Flotación suave del isotipo de respaldo (Cube3D) mientras no hay WebGL montado */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+/* ── Conveyor belt scrollbar ──────────────────────────────────── */
+.conveyor-scrollbar {
+  scrollbar-width: thin;
+  /* Firefox */
+  scrollbar-color: rgba(26, 26, 31, 0.55) rgba(9, 9, 11, 0.5);
+  /* Firefox thumb / track */
+}
+
+.conveyor-scrollbar::-webkit-scrollbar {
+  height: 2px;
+}
+
+/* ─── Layout ────────────────────────────────────────────── */
+.wrap {
+  width: 90%;
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.section {
+  position: relative;
+  z-index: 10;
+}
+
+/* ─── Tipografía Global ─────────────────────────────────────────── */
+.display{
+  font-family:var(--font-archivo-black), system-ui, sans-serif;
+  font-weight:400;
+  letter-spacing:-.03em;
+  line-height:1.02;
+  text-wrap:balance;
+}
+h1.display{ font-size:clamp(36px, 5vw, 68px); }
+h2.display{ font-size:clamp(30px, 4.2vw, 58px); }
+h3{
+  font-family:var(--font-archivo), system-ui, sans-serif;
+  font-weight:700;
+  font-size:clamp(18px,1.5vw,21px);
+  letter-spacing:-.015em;
+  line-height:1.25;
+}
+.lede{
+  font-size:clamp(16px,1.25vw,19px);
+  font-weight:300;
+  color:#A0A0A8;
+  line-height:1.7;
+  max-width:56ch;
+  text-wrap:pretty;
+}
+.body-sm{ font-size:15px; color:#A0A0A8; line-height:1.7; font-weight:300; }
+
+.eyebrow{
+  display:flex; align-items:center; gap:14px;
+  font-family:var(--font-archivo), system-ui, sans-serif;
+  font-size:12px; font-weight:700;
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--brand-red);
+  margin-bottom:20px;
+}
+.eyebrow::before{ content:''; width:34px; height:2px; background:currentColor; flex:none; }
+.eyebrow.is-centered{ justify-content:center; }
+.eyebrow.is-centered::after{ content:''; width:34px; height:2px; background:currentColor; flex:none; }
+.eyebrow.is-amber{ color:var(--brand-gold); }
+
+/* ─── Botones ────────────────────────────────────────────── */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  font-family:var(--font-archivo), system-ui, sans-serif;
+  font-weight:700; font-size:13px;
+  letter-spacing:.12em; text-transform:uppercase;
+  padding:16px 34px;
+  border:1px solid transparent;
+  border-radius:0;
+  cursor:pointer; text-decoration:none; white-space:nowrap;
+  transition:background .3s cubic-bezier(.22,.61,.36,1), color .3s cubic-bezier(.22,.61,.36,1),
+             border-color .3s cubic-bezier(.22,.61,.36,1), transform .3s cubic-bezier(.22,.61,.36,1),
+             box-shadow .3s cubic-bezier(.22,.61,.36,1);
+}
+.btn-primary{ background:var(--brand-red); color:#fff; }
+.btn-primary:hover{ background:#E13526; transform:translateY(-2px); box-shadow:0 12px 32px rgba(237,28,36,.34); }
+
+/* Volver atrás en las páginas de detalle */
+.back{
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:var(--font-archivo), system-ui, sans-serif;
+  font-size:12px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase;
+  color:#A0A0A8;
+  text-decoration:none;
+  margin-bottom:24px;
+  transition:color .25s cubic-bezier(.22,.61,.36,1), gap .25s cubic-bezier(.22,.61,.36,1);
+}
+.back:hover{ color:var(--brand-red); gap:14px; }
+
+/* ═══ ÁREAS · rueda orbital ══════════════════════════════ */
+.areas-inner{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,64px); align-items:center; }
+.wheel{
+  position:relative;
+  width:min(560px, 46vw);
+  aspect-ratio:1;
+  justify-self:center;
+  touch-action:pan-y;
+  cursor:grab;
+}
+.wheel:active{ cursor:grabbing; }
+/* El aro coincide con la elipse de los nodos (rx 38% · ry 25%):
+   diámetro = 2·rx = 76%, inclinación = acos(25/38). */
+.wheel-track{
+  position:absolute; left:50%; top:50%;
+  width:76%; aspect-ratio:1;
+  transform:translate(-50%,-50%) rotateX(48.9deg);
+  border:3px solid rgba(237,28,36,.34);
+  border-radius:50%;
+}
+.wheel-track::after{
+  content:''; position:absolute; inset:-3px;
+  border-radius:50%;
+  border:4px solid transparent;
+  background:conic-gradient(from 0deg, transparent 0 62%, rgba(237,28,36,.85) 78%, transparent 92%) border-box;
+  -webkit-mask:linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  mask:linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; 
+  mask-composite:exclude;
+  animation:trackSpin 9s linear infinite;
+}
+@keyframes trackSpin{ to{ transform:rotate(360deg) } }
+
+.wheel-core{ position:absolute; left:50%; top:50%; width:30%; aspect-ratio:1; transform:translate(-50%,-50%); pointer-events:none; }
+#wheel-canvas{ width:100%; height:100%; display:block; }
+.wheel-core .cube-fallback{ position:static; inset:auto; width:100%; height:100%; object-fit:contain; }
+
+.node{
+  position:absolute;
+  width:23%; aspect-ratio:1;
+  margin:-11.5% 0 0 -11.5%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+  background:var(--brand-red-dark);
+  border:1px solid rgba(237,28,36,.5);
+  border-radius:50%;
+  color:#fff;
+  font-family:var(--font-archivo); font-weight:700; letter-spacing:.02em;
+  cursor:pointer;
+  will-change:transform, opacity;
+  transition:background .4s cubic-bezier(.22,.61,.36,1), border-color .4s cubic-bezier(.22,.61,.36,1),
+             box-shadow .4s cubic-bezier(.22,.61,.36,1), color .4s cubic-bezier(.22,.61,.36,1);
+}
+/* Sin etiqueta, el símbolo puede ocupar mucho más el disco */
+.node svg{ width:46%; height:auto; stroke:currentColor; fill:none; stroke-width:1.6; }
+.node.is-active{
+  background:#fff; color:var(--brand-red-dark); border-color:#fff;
+  box-shadow:0 0 0 8px rgba(237,28,36,.16), 0 18px 44px rgba(237,28,36,.35);
+}
+
+.area-panel{ position:relative; min-height:340px; }
+.area-panel h2{ margin-bottom:18px; }
+.area-panel .lede{ margin-bottom:32px; }
+.area-lists{ display:grid; gap:26px; margin-bottom:34px; }
+.area-list h4{
+  font-family:var(--font-archivo);
+  font-size:12px; font-weight:700;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--brand-gold);
+  margin-bottom:14px;
+}
+.area-list ul{ list-style:none; display:grid; gap:10px; padding:0; }
+.area-list li{
+  display:flex; gap:13px; align-items:flex-start;
+  font-size:14.5px; color:#A0A0A8; font-weight:300; line-height:1.6;
+}
+.area-list li::before{ content:''; flex:none; width:7px; height:7px; margin-top:8px; background:var(--brand-red); }
+.area-list.is-seek li::before{ background:var(--brand-gold); }
+.area-fade{ transition:opacity .32s cubic-bezier(.22,.61,.36,1), transform .32s cubic-bezier(.22,.61,.36,1); }
+.area-fade.is-out{ opacity:0; transform:translateY(10px); }
+.wheel-hint{
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--font-archivo);
+  font-size:11px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase;
+  color:#82828C;
+  margin-top:26px;
+}
+
+/* Panel doble de la página de detalle de área */
+.panel{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-top:3px solid var(--brand-red);
+  padding:clamp(30px,3.4vw,48px) clamp(26px,3vw,42px);
+}
+.panel.is-seek{ border-top-color:var(--brand-gold); }
+.panel h2{ margin-bottom:28px; font-size:clamp(24px,2.6vw,32px); }
+
+/* ─────────────────────────────────────────────────────────────
+   CMS
+───────────────────────────────────────────────────────────── */
+
+.cms-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #2b2b32 transparent;
+}
+
+.cms-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.cms-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cms-scrollbar::-webkit-scrollbar-thumb {
+  background: #2b2b32;
+}
+
+.cms-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #3a3a43;
+}
+
+.cms-input {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #2a2a31;
+  background: #0d0d10;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 14px;
+  padding-right: 14px;
+  color: #f4f4f5;
+  font-size: 14px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.cms-input::placeholder {
+  color: #52525b;
+}
+
+.cms-input:focus {
+  border-color: #ed1c24;
+  background: #101014;
+}
+
+.cms-label {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #71717a;
+}
+
+.cms-button-primary {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #ed1c24;
+  padding: 0 18px;
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: white;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.cms-button-primary:hover {
+  background: #d9171f;
+}
+
+.cms-button-primary:active {
+  transform: scale(0.98);
+}
+
+.cms-button-secondary {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #313138;
+  background: transparent;
+  padding: 0 18px;
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #a1a1aa;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.cms-button-secondary:hover {
+  border-color: #52525b;
+  background: rgba(255, 255, 255, 0.02);
+  color: white;
+}
+/*
+ * Carrusel de la Junta Directiva.
+ *
+ * Animación CSS en vez de mover scrollLeft por JS: arranca sola al cargar
+ * y se detiene por completo al pasar el cursor por cualquier tarjeta.
+ * La lista se duplica en el markup, así translateX(-50%) reinicia el bucle
+ * sin costura. Sin `gap` en la pista: cada tarjeta lleva su margen para
+ * que la mitad exacta coincida y no haya salto al reiniciar.
+ */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: conveyor-left 50s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}

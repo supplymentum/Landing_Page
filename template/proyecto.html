@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proyecto — SupplyMentum UNI</title>
+<meta name="description" content="Ficha del proyecto: equipo participante y galería.">
+<meta name="theme-color" content="#0A0A0B">
+<script>document.documentElement.className += ' js';</script>
+<link rel="icon" href="assets/cubo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<canvas id="net" aria-hidden="true"></canvas>
+<div class="page">
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo" aria-label="SupplyMentum UNI — inicio">
+    <img src="assets/logo.png" alt="SupplyMentum UNI · Cadena de Suministros">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="conocenos.html">Conócenos</a></li>
+    <li><a href="areas.html">Áreas</a></li>
+    <li><a href="proyectos.html">Proyectos</a></li>
+    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="convocatoria.html">Convocatoria</a></li>
+  </ul>
+  <a href="convocatoria.html" class="btn btn-primary btn-sm">Únete</a>
+</nav>
+
+<main>
+
+  <header class="page-hero">
+    <img id="p-img" src="" alt="">
+    <div class="wrap">
+      <a href="proyectos.html" class="back">← Todos los proyectos</a>
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+        <span class="tag" id="p-area"></span>
+        <span style="font-family:var(--sub);font-size:13px;color:var(--text-2)" id="p-year"></span>
+      </div>
+      <h1 class="display" id="p-name"></h1>
+      <p class="lede" id="p-desc"></p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="display" style="margin-bottom:44px">Participantes</h2>
+      <div class="grid grid-4" id="p-team"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="display" style="margin-bottom:44px">Galería del proyecto</h2>
+      <div class="gallery" id="p-gallery"></div>
+    </div>
+  </section>
+
+  <section class="section cta">
+    <div class="wrap">
+      <h2 class="display">¿Quieres liderar el próximo?</h2>
+      <p class="lede">Los proyectos los proponen y ejecutan nuestros propios miembros.</p>
+      <a href="convocatoria.html" class="btn btn-primary btn-lg">Postula aquí</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="SupplyMentum UNI">
+        <p class="body-sm" style="max-width:34ch">
+          Comunidad universitaria que impulsa el desarrollo académico y profesional
+          en gestión de la cadena de suministro.
+        </p>
+      </div>
+      <div>
+        <h4>Página</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="conocenos.html">Conócenos</a></li>
+          <li><a href="areas.html">Áreas</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Comunidad</h4>
+        <ul>
+          <li><a href="eventos.html">Eventos</a></li>
+          <li><a href="convocatoria.html">Convocatoria</a></li>
+          <li><a href="#">Alianzas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Síguenos</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SupplyMentum UNI · Cadena de Suministros</span>
+      <span>Universidad Nacional de Ingeniería</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+/* El proyecto se elige por la URL: proyecto.html?p=<slug> */
+(() => {
+  const slug = new URLSearchParams(location.search).get('p');
+  const p = SM.buscarProyecto(slug);
+
+  document.title = p.name + ' — SupplyMentum UNI';
+  document.querySelector('meta[name=description]').content = p.desc.slice(0, 155);
+
+  document.getElementById('p-img').src = p.img;
+  document.getElementById('p-area').textContent = p.area;
+  document.getElementById('p-year').textContent = p.year;
+  document.getElementById('p-name').textContent = p.name;
+  document.getElementById('p-desc').textContent = p.desc;
+
+  document.getElementById('p-team').innerHTML = SM.equipoProyecto.map(t => `
+    <article class="person reveal">
+      <div class="person-photo"><img src="${t.img}" alt="${t.name}" loading="lazy"></div>
+      <div class="person-body">
+        <h3 style="font-size:16px">${t.name}</h3>
+        <div class="person-role" style="margin-bottom:0">${t.role}</div>
+      </div>
+    </article>`).join('');
+
+  // Galería derivada del slug, para que cada proyecto tenga imágenes propias
+  document.getElementById('p-gallery').innerHTML = [1, 2, 3].map(i => `
+    <figure class="reveal">
+      <img src="https://picsum.photos/seed/${p.slug}-g${i}/900/700" alt="" loading="lazy">
+    </figure>`).join('');
+})();
+</script>
+
+</body>
+</html>

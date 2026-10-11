@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SupplyMentum UNI — Movemos el talento que mueve al mundo</title>
+<meta name="description" content="Comunidad universitaria de la UNI que impulsa el desarrollo académico y profesional en gestión de la cadena de suministro.">
+<meta name="theme-color" content="#0A0A0B">
+<script>document.documentElement.className += ' js';</script>
+<link rel="icon" href="assets/cubo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<canvas id="net" aria-hidden="true"></canvas>
+<div class="page">
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo" aria-label="SupplyMentum UNI — inicio">
+    <img src="assets/logo.png" alt="SupplyMentum UNI · Cadena de Suministros">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="conocenos.html">Conócenos</a></li>
+    <li><a href="areas.html">Áreas</a></li>
+    <li><a href="proyectos.html">Proyectos</a></li>
+    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="convocatoria.html">Convocatoria</a></li>
+  </ul>
+  <a href="convocatoria.html" class="btn btn-primary btn-sm">Únete</a>
+</nav>
+
+<main>
+
+  <!-- ══ HERO ══ -->
+  <header class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-copy">
+      <p class="eyebrow">Universidad Nacional de Ingeniería</p>
+      <h1 class="display">Movemos el talento que mueve <span class="accent">al mundo.</span></h1>
+      <p class="lede">
+        Somos la comunidad universitaria que impulsa el desarrollo académico y
+        profesional en gestión de la cadena de suministro. Aprendemos juntos,
+        compartimos experiencias y crecemos de forma colaborativa, más allá de las aulas.
+      </p>
+      <div class="hero-actions">
+        <a href="convocatoria.html" class="btn btn-primary">Postula ahora</a>
+        <a href="areas.html" class="btn btn-ghost">Explora las áreas</a>
+      </div>
+      <div class="hero-meta">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Convocatoria 2026-II abierta</span>
+      </div>
+    </div>
+    <div class="hero-stage">
+      <canvas id="cube-canvas" aria-hidden="true"></canvas>
+      <img class="cube-fallback" src="assets/cubo.png" alt="Isotipo tridimensional de SupplyMentum: dos marcos cúbicos anidados, blanco y rojo.">
+    </div>
+  </header>
+
+  <!-- ══ QUÉ ES ══ -->
+  <section class="section">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="eyebrow">¿Qué es SupplyMentum UNI?</p>
+        <h2 class="display">Una comunidad que impulsa el Supply Chain en el Perú</h2>
+        <p class="lede" style="margin-top:22px">
+          Nacimos en la UNI para cerrar la distancia entre la teoría del aula y la
+          operación real de una cadena de suministro. Formamos, conectamos y ponemos
+          a prueba a nuestros miembros en proyectos con impacto medible.
+        </p>
+        <a href="conocenos.html" class="btn btn-outline" style="margin-top:32px">Conócenos →</a>
+      </div>
+      <div class="figure reveal">
+        <img src="https://picsum.photos/seed/sm-comunidad/900/700" alt="Miembros de SupplyMentum UNI durante una sesión del programa formativo.">
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ RUBROS ══ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow">Nuestros rubros</p>
+        <h2 class="display">De extremo a extremo de la cadena</h2>
+        <p class="lede" style="margin-top:20px">
+          Cubrimos las cuatro etapas del flujo, en el orden en que ocurren.
+        </p>
+      </div>
+      <!-- La numeración es real: estas cuatro etapas son una secuencia. -->
+      <div class="chain reveal">
+        <article class="link">
+          <div class="link-num">01</div><h3>Planeamiento</h3>
+          <p class="body-sm">Demanda, S&amp;OP e inventarios: anticipamos lo que la cadena necesita.</p>
+        </article>
+        <article class="link">
+          <div class="link-num">02</div><h3>Abastecimiento</h3>
+          <p class="body-sm">Compras, sourcing y gestión de proveedores estratégicos.</p>
+        </article>
+        <article class="link">
+          <div class="link-num">03</div><h3>Producción</h3>
+          <p class="body-sm">Operaciones, Lean y mejora continua en planta y servicios.</p>
+        </article>
+        <article class="link">
+          <div class="link-num">04</div><h3>Distribución</h3>
+          <p class="body-sm">Logística, transporte y última milla hasta el cliente final.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ MÉTRICAS ══ -->
+  <section class="metrics" aria-label="Cifras del centro">
+    <div class="metrics-grid">
+      <div class="metric">
+        <div class="metric-num" data-count="120" data-prefix="+">+0</div>
+        <div class="metric-label">Miembros activos</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num" data-count="40" data-prefix="+">+0</div>
+        <div class="metric-label">Eventos realizados</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num" data-count="15" data-prefix="+">+0</div>
+        <div class="metric-label">Proyectos ejecutados</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num" data-count="20" data-prefix="+">+0</div>
+        <div class="metric-label">Empresas aliadas</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ NOVEDADES ══ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-bottom:48px">
+        <div>
+          <p class="eyebrow">Novedades</p>
+          <h2 class="display">Lo último del centro</h2>
+        </div>
+        <a href="eventos.html" class="btn btn-ghost btn-sm">Ver eventos →</a>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="rail" id="novedades" data-autoscroll tabindex="0" role="region" aria-label="Novedades — desplázate horizontalmente"></div>
+    </div>
+  </section>
+
+  <!-- ══ POR QUÉ UNIRTE ══ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="reveal" style="margin-bottom:48px">
+        <p class="eyebrow">¿Por qué unirte?</p>
+        <h2 class="display">Lo que ganas siendo parte de SupplyMentum</h2>
+      </div>
+      <div class="grid grid-3" id="beneficios"></div>
+      <div style="display:flex;justify-content:center;margin-top:52px">
+        <a href="convocatoria.html" class="btn btn-primary btn-lg">Postula aquí</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ EXPLORA ══ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="reveal" style="margin-bottom:48px">
+        <p class="eyebrow">Explora</p>
+        <h2 class="display">Descubre SupplyMentum UNI</h2>
+      </div>
+      <div class="grid grid-4">
+        <a class="card reveal" href="conocenos.html">
+          <div class="card-body">
+            <div class="link-num" style="font-size:13px;color:var(--red);letter-spacing:.2em;margin-bottom:4px">01</div>
+            <h3 style="font-size:24px">Conócenos</h3>
+            <p class="body-sm">Nuestra historia, misión, visión y el equipo detrás del centro.</p>
+            <div class="card-meta" style="color:var(--red)">Entrar →</div>
+          </div>
+        </a>
+        <a class="card reveal" href="areas.html">
+          <div class="card-body">
+            <div class="link-num" style="font-size:13px;color:var(--red);letter-spacing:.2em;margin-bottom:4px">02</div>
+            <h3 style="font-size:24px">Áreas</h3>
+            <p class="body-sm">Seis áreas donde puedes aportar y desarrollarte.</p>
+            <div class="card-meta" style="color:var(--red)">Entrar →</div>
+          </div>
+        </a>
+        <a class="card reveal" href="proyectos.html">
+          <div class="card-body">
+            <div class="link-num" style="font-size:13px;color:var(--red);letter-spacing:.2em;margin-bottom:4px">03</div>
+            <h3 style="font-size:24px">Proyectos</h3>
+            <p class="body-sm">El catálogo de iniciativas que hemos hecho realidad.</p>
+            <div class="card-meta" style="color:var(--red)">Entrar →</div>
+          </div>
+        </a>
+        <a class="card reveal" href="eventos.html">
+          <div class="card-body">
+            <div class="link-num" style="font-size:13px;color:var(--red);letter-spacing:.2em;margin-bottom:4px">04</div>
+            <h3 style="font-size:24px">Eventos</h3>
+            <p class="body-sm">Charlas, talleres y congresos: pasados y por venir.</p>
+            <div class="card-meta" style="color:var(--red)">Entrar →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="SupplyMentum UNI">
+        <p class="body-sm" style="max-width:34ch">
+          Comunidad universitaria que impulsa el desarrollo académico y profesional
+          en gestión de la cadena de suministro.
+        </p>
+      </div>
+      <div>
+        <h4>Página</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="conocenos.html">Conócenos</a></li>
+          <li><a href="areas.html">Áreas</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Comunidad</h4>
+        <ul>
+          <li><a href="eventos.html">Eventos</a></li>
+          <li><a href="convocatoria.html">Convocatoria</a></li>
+          <li><a href="#">Alianzas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Síguenos</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SupplyMentum UNI · Cadena de Suministros</span>
+      <span>Universidad Nacional de Ingeniería</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/cube.js"></script>
+<script>
+/* Novedades y beneficios se pintan desde assets/js/data.js */
+(() => {
+  const rail = document.getElementById('novedades');
+  if (rail) rail.innerHTML = SM.novedades.map(n => `
+    <a class="card" href="${n.href}">
+      <div class="card-media"><img src="${n.img}" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <span class="tag">${n.tag}</span>
+        <h3>${n.title}</h3>
+        <p class="body-sm">${n.desc}</p>
+        <div class="card-meta">${n.date}</div>
+      </div>
+    </a>`).join('');
+
+  const ben = document.getElementById('beneficios');
+  if (ben) ben.innerHTML = SM.beneficios.map(b => `
+    <div class="benefit reveal">
+      <h3>${b.title}</h3>
+      <p class="body-sm">${b.desc}</p>
+    </div>`).join('');
+})();
+</script>
+
+</body>
+</html>
